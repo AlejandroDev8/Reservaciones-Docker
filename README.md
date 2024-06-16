@@ -21,103 +21,142 @@ El sistema permite a los usuarios registrarse, iniciar sesión, reservar una sal
 
 Para poder correr el proyecto, necesitas tener instalado lo siguiente:
 
+Docker y Docker Desktop
+
+```bash
+Docker ^26.1.1
+Docker Desktop ^4.31.1
+```
+
+Wsl en su versión 2
+
+```bash
+wsl2
+```
+
 ```php
-PHP ^8.2
-Composer ^2.6.5
+PHP ^8.3.8
+Composer ^2.7.7
 Laravel Installer ^5.1.3
 ```
 
 ```js
-Node.js ^20.0.0
-npm ^10.4.0
+Node.js ^22.3.0
+npm ^10.8.1
 ```
 
 ### Instalación 🔧
 
-Para instalar el proyecto, primero debes clonar el repositorio:
+Para instalar el proyecto, primero debes clonar el repositorio en wsl2, para ello, ejecuta el siguiente comando:
 
 ```bash
 git clone https://github.com/AlejandroDev8/Reservaciones-Docker.git
 ```
 
-Después, debes instalar las dependencias de PHP:
+**Nota:** Si no quieres escribir el comando completo de `./vendor/bin/sail`, puedes crear un alias en tu archivo `.~/bashrc` o `.~/zshrc`:
 
 ```bash
-composer install
+alias sail='./vendor/bin/sail'
 ```
 
-Después, debes instalar las dependencias de Node.js:
+Y ya con ese alias, puedes ejecutar los comandos de sail de la siguiente manera:
 
 ```bash
-npm install
+sail [comando]
 ```
 
-Después, debes copiar el archivo `.env.example` y renombrarlo a `.env`:
+Ya que tengas el repositorio clonado, debes entrar a la carpeta del proyecto:
+
+```bash
+cd Reservaciones-Docker
+```
+
+Después inicializa Docker Desktop.
+
+Una vez que Docker Desktop esté corriendo, ejecuta el siguiente comando para instalar las dependencias de PHP:
+
+```bash
+
+./vendor/bin/sail composer install
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail composer install
+```
+
+Después, ejecuta el siguiente comando para instalar las dependencias de Node.js:
+
+```bash
+./vendor/bin/sail npm install
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail npm install
+```
+
+Ya que tengas todas las dependencias instaladas, ejecuta el siguiente comando para copiar el archivo .env.example a .env:
 
 ```bash
 cp .env.example .env
 ```
 
-Después, debes generar la llave de la aplicación:
+En este caso se está usando una base de datos en `MySQL`, por lo que debes configurar las variables de entorno en el archivo `.env`:
 
-```bash
-php artisan key:generate
+```env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=reservaciones
+DB_USERNAME=sail [Este es el usuario por defecto en docker]
+DB_PASSWORD=password [Este es la contraseña por defecto en docker]
 ```
 
-Después, debes crear la base de datos, que en este caso se está usando `PostgreSQL` y configurar las credenciales en el archivo `.env`.
-
-Después, debes correr las migraciones:
+Ya que tengas configurado el archivo `.env`, ejecuta el siguiente comando para generar la llave de la aplicación:
 
 ```bash
-php artisan migrate
+./vendor/bin/sail artisan key:generate
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail artisan key:generate
 ```
 
-Después, debes correr el servidor:
+Después, ejecuta el siguiente comando para correr las migraciones y los seeders:
 
 ```bash
-php artisan serve
+./vendor/bin/sail artisan migrate --seed
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail artisan migrate --seed
 ```
 
-Después, debes compilar los assets:
+Finalmente, ejecuta el siguiente comando para correr el proyecto:
 
 ```bash
-npm run dev
+./vendor/bin/sail up
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail up
 ```
 
-En este caso el proyecto cuenta con envio de correos electrónicos, por lo que debes configurar las credenciales de tu correo en el archivo `.env`.
-
-## Uso 🚀
-
-Una vez que hayas instalado y configurado correctamente todo, puedes correr el servidor y acceder a la aplicación en tu navegador.
+Y para que puedas ver los estilos correctamente, ejecuta el siguiente comando:
 
 ```bash
-php artisan serve
-npm run dev
+./vendor/bin/sail npm run dev
+
+# o en su defecto si creaste el alias, sería de la siguiente manera
+
+sail npm run dev
 ```
 
-1. Abre tu navegador y ve a <http://localhost:8000> (o la URL que te proporcionó el comando anterior).
+Cuando quierás terminar la ejecución del proyecto, ejecuta el siguiente comando:
 
-2. Regístrate o inicia sesión en la aplicación.
+```bash
+./vendor/bin/sail down
 
-3. Una vez que hayas iniciado sesión, podrás reservar una sala seleccionando la opción 'Solicitar Reservación' en el menú.
+# o en su defecto si creaste el alias, sería de la siguiente manera
 
-4. Para ver tus reservaciones, selecciona 'Mis Solicitudes' en el menú.
-
-5. Si necesitas eliminar una reservación, puedes hacerlo desde la sección 'Mis Solicitudes'.
-
-## Construido con 🛠️
-
-- [Laravel](https://laravel.com/) - El framework web usado.
-- [Tailwind CSS](https://tailwindcss.com/) - El framework de CSS usado.
-- [Alpine.js](https://alpinejs.dev/) - El framework de JavaScript usado.
-- [Livewire](https://laravel-livewire.com/) - El framework de PHP usado.
-- [Breeze](https://laravel.com/docs/11.x/starter-kits#laravel-breeze) - El starter kit usado.
-- [PostgreSQL](https://www.postgresql.org/) - La base de datos usada.
-- [Node.js](https://nodejs.org/) - El entorno de ejecución de JavaScript usado.
-- [NPM](https://www.npmjs.com/) - El manejador de paquetes usado.
-
-## Autores ✒️
-
-- **Alejandro Olvera Delgado** - *Desarrollador* - [AlejandroDev8](https://github.com/AlejandroDev8)
-- **Xally Martínez Trejo** - *Desarrollador* - [XallyMartinez](https://github.com/20690080xallytrejo)
-- **Alexis Ponce González** - *Desarrollador* - [AlexisPonceG](https://github.com/PONCE2602)
+sail down
+```
