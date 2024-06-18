@@ -4,13 +4,12 @@
 
     <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
-        <x-input-error :messages="str_replace('email', 'correo electrónico', $errors->get('email'))" class="mt-2" />
-        <x-input-error :messages="str_replace('password', 'contraseña', $errors->get('password'))" class="mt-2" />
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Correo Electrónico')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                 autofocus autocomplete="username" placeholder="Ingresa tu correo electrónico" />
+            <x-input-error :messages="str_replace('email', 'correo electrónico', $errors->get('email'))" class="mt-2" />
 
         </div>
 
@@ -20,6 +19,7 @@
 
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                 autocomplete="current-password" placeholder="Ingresa tu contraseña" />
+            <x-input-error :messages="str_replace('password', 'contraseña', $errors->get('password'))" class="mt-2" />
         </div>
 
         <!-- Remember Me -->
