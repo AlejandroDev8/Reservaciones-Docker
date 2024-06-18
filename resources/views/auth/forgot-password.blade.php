@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-4 text-sm text-gray-600 text-wrap">
         {{ __('¿Olvidaste tu contraseña? No hay problema. Solo indícanos tu dirección de correo electrónico y te
         enviaremos un enlace para restablecer la contraseña que te permitirá elegir una nueva.') }}
     </div>
@@ -18,7 +18,7 @@
             <x-input-error :messages="str_replace('email', 'correo electrónico', $errors->get('email'))" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-end mt-4 text-wrap">
             <x-primary-button>
                 {{ __('Enviar enlace de restablecimiento al correo electrónico') }}
             </x-primary-button>
