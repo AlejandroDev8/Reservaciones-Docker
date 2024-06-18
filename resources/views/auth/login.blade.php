@@ -8,7 +8,7 @@
         <x-input-error :messages="str_replace('password', 'contraseña', $errors->get('password'))" class="mt-2" />
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Correo Eléctronico')" />
+            <x-input-label for="email" :value="__('Correo Electrónico')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                 autofocus autocomplete="username" placeholder="Ingresa tu correo electrónico" />
 
@@ -38,7 +38,7 @@
             </x-link>
 
             <x-link href="{{ route('password.request') }}">
-                Olvidaste tu contraseña
+                ¿Olvidaste tu contraseña?
             </x-link>
 
         </div>
